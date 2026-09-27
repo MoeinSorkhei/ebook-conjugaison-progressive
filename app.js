@@ -233,7 +233,7 @@
   function skipIcon(forward) {
     var arc = forward ? "M18.06 9.5A7 7 0 1 1 12 6" : "M5.94 9.5A7 7 0 1 0 12 6";
     var head = forward ? "M9.6 3.6L12 6 9.6 8.4" : "M14.4 3.6L12 6l2.4 2.4";
-    return '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+    return '<svg viewBox="2 1 20 20" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' +
       '<path d="' + arc + '"/><path d="' + head + '"/>' +
       '<text x="12" y="16.2" text-anchor="middle" font-size="8" font-weight="700" fill="currentColor" stroke="none" font-family="system-ui,sans-serif">5</text></svg>';
   }
@@ -251,7 +251,9 @@
     var time = el("span", { class: "time", text: "0:00 / 0:00" });
     var sp = 0;
     var speed = el("button", { class: "speed", title: "Vitesse", text: "1×" });
-    var loop = el("button", { class: "loop", title: "Répéter", text: "⟳" });
+    var loop = el("button", { class: "loop", title: "Répéter", "aria-label": "Répéter" });
+    loop.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M17 2l3 3-3 3"/><path d="M4 11V9a4 4 0 0 1 4-4h12"/><path d="M7 22l-3-3 3-3"/><path d="M20 13v2a4 4 0 0 1-4 4H4"/></svg>';
 
     function seek(d) { a.currentTime = Math.max(0, Math.min((a.duration || 0), a.currentTime + d)); }
     play.onclick = function () { a.paused ? a.play() : a.pause(); };
