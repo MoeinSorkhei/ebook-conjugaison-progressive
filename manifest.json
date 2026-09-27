@@ -1,0 +1,9 @@
+{
+  "name": "Conjugaison progressive du français",
+  "short_name": "Conjugaison",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f7f2",
+  "theme_color": "#5878a4",
+  "icons": [{ "src": "icon.png", "sizes": "512x512", "type": "image/png" }]
+}
