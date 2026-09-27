@@ -230,13 +230,23 @@
   var current = null;
   var SPEEDS = [1, 0.9, 0.75, 1.25];
 
+  function skipIcon(forward) {
+    var arc = forward ? "M18.06 9.5A7 7 0 1 1 12 6" : "M5.94 9.5A7 7 0 1 0 12 6";
+    var head = forward ? "M9.6 3.6L12 6 9.6 8.4" : "M14.4 3.6L12 6l2.4 2.4";
+    return '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="' + arc + '"/><path d="' + head + '"/>' +
+      '<text x="12" y="16.2" text-anchor="middle" font-size="8" font-weight="700" fill="currentColor" stroke="none" font-family="system-ui,sans-serif">5</text></svg>';
+  }
+
   function player(src, title) {
     var a = new Audio();
     a.preload = "metadata";
     asset(src).then(function (u) { a.src = u; });
     var play = el("button", { class: "play", title: "Lecture / pause", text: "▶" });
-    var back = el("button", { title: "Reculer de 5 s", text: "−5" });
-    var fwd = el("button", { title: "Avancer de 5 s", text: "+5" });
+    var back = el("button", { class: "skip", title: "Reculer de 5 s", "aria-label": "Reculer de 5 s" });
+    var fwd = el("button", { class: "skip", title: "Avancer de 5 s", "aria-label": "Avancer de 5 s" });
+    back.innerHTML = skipIcon(false);
+    fwd.innerHTML = skipIcon(true);
     var bar = el("input", { class: "bar", type: "range", min: 0, max: 1000, value: 0, "aria-label": "Position" });
     var time = el("span", { class: "time", text: "0:00 / 0:00" });
     var sp = 0;
@@ -353,7 +363,9 @@
         var j = slot++;
         var inp = el("input", { class: "blank", type: "text", autocapitalize: "off", autocomplete: "off", spellcheck: "false" });
         inp.value = state.v[j] || "";
-        inp.oninput = function () { state.v[j] = inp.value; state.save(); inp.className = "blank"; };
+        var grow = function () { inp.style.width = inp.value.length > 6 ? "calc(" + inp.value.length + "ch + 1.5rem)" : ""; };
+        grow();
+        inp.oninput = function () { grow(); state.v[j] = inp.value; state.save(); inp.className = "blank"; };
         controls.push({ kind: "blank", i: j, node: inp });
         wrap.appendChild(inp);
       } else if (part) {
